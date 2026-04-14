@@ -1,0 +1,38 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath} % Essential for symbols like the double-struck R
+\usepackage{amsfonts} % Needed for \mathbb
+
+\title{BohdansLegacyLatex}
+\author{Yaroslav Riabikov}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{description}
+
+\item{(a)} \[
+\text{Min} \left\{ J(x) = -\sum_{i=1}^{m} v^i \ln \left( g(x^T u^i) \right) + (1 - v^i) \ln \left( 1 - g(x^T u^i) \right)  \mid x \in \mathbb{R}^5 \right\},
+\]
+Dosadime za kazde $g(z)$ funkciu ktorej sa rovna $g(z) = \frac{1}{1+e^{-z}}$
+\[ \ln \left( g(x^Tu^i) \right) =\ln \left( \frac{1}{1+e^{-x^Tu^i}} \right) =-\ln \left( 1+e^{-x^Tu^i} \right) \]
+
+\[ \ln \left( 1-g(x^Tu^i) \right) =\ln \left( 1-\frac{1}{1+e^{-x^Tu^i}} \right) =\ln \left( \frac{e^{-x^Tu^i}}{1+e^{-x^Tu^i}} \right) =\ln \left( e^{-x^Tu^i} \right) -\ln \left( 1+e^{-x^Tu^i} \right) \]
+
+Teraz prepiseme to co mame vnutri sumy 
+\[ v^i \left( -\ln \left( 1+e^{-x^Tu^i} \right) \right)+(1-v^i) \left( \ln \left( e^{-x^Tu^i} \right) -\ln \left( 1+e^{-x^Tu^i} \right) \right)=(1-v^i)\ln \left( e^{-x^Tu^i} \right)-\ln \left( 1+e^{-x^Tu^i} \right)=(1-v^i)\left( -x^Tu^i \right)-\ln \left( 1+e^{-x^Tu^i} \right) \]
+Zanesieme minus do vnutra sumy a dostaneme
+\[ (1-v^i)x^Tu^i+\ln \left( 1+e^{-x^Tu^i} \right) \]
+Vo vysledku dostaneme
+\[
+\text{Min} \left\{ J(x) = \sum_{i=1}^{m} (1-v^i)x^Tu^i+\ln \left( 1+e^{-x^Tu^i} \right)  \mid x \in \mathbb{R}^5 \right\},
+\]
+
+\item({b})
+\[ \frac{\delta J}{\delta x_j}=\sum_{i=1}^{m}(x^Tu^i-v^ix^Tu^i+\ln(1+e^{-x^Tu^i}))'=\sum_{i=1}^{m}(u_j^i - v^iu_j^i+\frac{e^{-x^Tu^i}}{1+e^{-x^Tu^i}}(-u_j^i)) \]
+
+\end{description}
+
+\end{document}
