@@ -1,39 +1,143 @@
 \documentclass{article}
-\usepackage{graphicx} % Required for inserting images
-\usepackage{amsmath} % Essential for symbols like the double-struck R
-\usepackage{amsfonts} % Needed for \mathbb
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[margin=2cm, top=1.5cm]{geometry}
 
 \title{BohdansLegacyLatex}
+\author{}
+\date{}
 
 \begin{document}
 
 \maketitle
 
-\begin{description}
+\section*{1. Analytická časť}
 
-\item{(a)} \[
-\text{Min} \left\{ J(x) = -\sum_{i=1}^{m} v^i \ln \left( g(x^T u^i) \right) + (1 - v^i) \ln \left( 1 - g(x^T u^i) \right)  \mid x \in \mathbb{R}^5 \right\}
-\]
-Dosadime za kazde $g(z)$ funkciu ktorej sa rovna $g(z) = \frac{1}{1+e^{-z}}$
-\[ \ln \left( g(x^Tu^i) \right) =\ln \left( \frac{1}{1+e^{-x^Tu^i}} \right) =-\ln \left( 1+e^{-x^Tu^i} \right) \]
-
-\[ \ln \left( 1-g(x^Tu^i) \right) =\ln \left( 1-\frac{1}{1+e^{-x^Tu^i}} \right) = \] \[= \ln \left( \frac{e^{-x^Tu^i}}{1+e^{-x^Tu^i}} \right) =\ln \left( e^{-x^Tu^i} \right) -\ln \left( 1+e^{-x^Tu^i} \right) \]
-
-Teraz prepiseme to co mame vnutri sumy 
-\[ v^i \left( -\ln \left( 1+e^{-x^Tu^i} \right) \right)+(1-v^i) \left( \ln \left( e^{-x^Tu^i} \right) -\ln \left( 1+e^{-x^Tu^i} \right) \right) = \] \[= (1-v^i)\ln \left( e^{-x^Tu^i} \right)-\ln \left( 1+e^{-x^Tu^i} \right)=(1-v^i)\left( -x^Tu^i \right)-\ln \left( 1+e^{-x^Tu^i} \right) \]
-Zanesieme minus do vnutra sumy a dostaneme
-\[ (1-v^i)x^Tu^i+\ln \left( 1+e^{-x^Tu^i} \right) \]
-Vo vysledku dostaneme
+\subsection*{(a) Účelová funkcia}
 \[
-\text{Min} \left\{ J(x) = \sum_{i=1}^{m} (1-v^i)x^Tu^i+\ln \left( 1+e^{-x^Tu^i} \right)  \mid x \in \mathbb{R}^5 \right\},
+\min \left\{ J(x) =
+-\sum_{i=1}^{m} v^i \ln \left( g(x^T u^i) \right)
++ (1 - v^i) \ln \left( 1 - g(x^T u^i) \right)
+\;\middle|\; x \in \mathbb{R}^5 \right\}
+\]
+Dosadíme sigmoid:
+\[
+g(z) = \frac{1}{1 + e^{-z}}
 \]
 
-\item({b})
-Zderivujeme najprv podla kazdej zlozky vektora x
-\[ \frac{\delta J}{\delta x_j}=\sum_{i=1}^{m}(x^Tu^i-v^ix^Tu^i+\ln(1+e^{-x^Tu^i}))' = \] \[= \sum_{i=1}^{m}(u_j^i - v^iu_j^i+\frac{e^{-x^Tu^i}}{1+e^{-x^Tu^i}}(-u_j^i))=\sum_{i=1}^{m}((1-v^i-\frac{e^{-x^Tu^i}}{1+e^{-x^Tu^i}})u_j^i) = \] \[= \sum_{i=1}^{m}((\frac{1+e^{-x^Tu^i}-e^{-x^Tu^i}}{1+e^{-x^Tu^i}}-v^i)u_j^i)=\sum_{i=1}^{m}((\frac{1}{1+e^{-x^Tu^i}}-v^i)u_j^i) \]
-Teraz mozeme vyjadrit gradient
-\[ \nabla J(x) = \sum_{i=1}^{m}((\frac{1}{1+e^{-x^Tu^i}}-v^i)u^i)\]
+\[
+\ln \left( g(x^T u^i) \right)
+= \ln \left( \frac{1}{1 + e^{-x^T u^i}} \right)
+= -\ln \left( 1 + e^{-x^T u^i} \right)
+\]
 
-\end{description}
+\[
+\ln \left( 1 - g(x^T u^i) \right)
+= \ln \left( \frac{e^{-x^T u^i}}{1 + e^{-x^T u^i}} \right)
+= \ln \left( e^{-x^T u^i} \right)
+- \ln \left( 1 + e^{-x^T u^i} \right)
+\]
+
+Dosadíme do sumy:
+\[
+v^i \left(-\ln(1 + e^{-x^T u^i})\right)
++ (1 - v^i)\left( -x^T u^i - \ln(1 + e^{-x^T u^i}) \right)
+\]
+
+Uprava:
+\[
+(1 - v^i)x^T u^i + \ln(1 + e^{-x^T u^i})
+\]
+
+Výsledná funkcia:
+\[
+\min \left\{ J(x) =
+\sum_{i=1}^{m} \left[(1 - v^i)x^T u^i + \ln(1 + e^{-x^T u^i})\right]
+\;\middle|\; x \in \mathbb{R}^5 \right\}
+\]
+
+
+\subsection*{(b) Gradient}
+\[ \frac{\partial J}{\partial x_j}=\sum_{i=1}^{m}(x^Tu^i-v^ix^Tu^i+\ln(1+e^{-x^Tu^i}))'=\sum_{i=1}^{m}(u_j^i - v^iu_j^i+\frac{e^{-x^Tu^i}}{1+e^{-x^Tu^i}}(-u_j^i)) \]
+
+\section*{2. Výsledky experimentov – gradientné metódy}
+
+\subsection*{Referenčné riešenie}
+
+Ako referenčné riešenie bolo použité minimum získané metódou BFGS:
+\[
+x_{\text{opt}} \approx
+(-1.47377220,\; 3.07173693,\; 10.1906655,\; 17.7027043,\; 0.00484403)
+\]
+Štartovací bod:
+\[
+x_0 = (-1.47, 0, 0, 0, 0)^T
+\]
+Kritérium zastavenia:
+\[
+\|\nabla J(x^k)\|^2 < 10^{-3}
+\]
+
+\subsection*{(c) Gradientná metóda s konštantným krokom}
+
+\begin{itemize}
+    \item \textbf{Výsledok:} $x_c \approx (-1.47360963,\; 3.07175527,\; 10.1989855,\; 17.6905539,\; 0.00484668)$
+    \item \textbf{Chyba:} $\|x_c - x_{\text{opt}}\|_2 \approx 0.01472689$
+    \item \textbf{Počet iterácií:} $2\,736\,859$
+    \item \textbf{Čas:} $66.4\,\mathrm{s}$
+\end{itemize}
+
+Metóda je stabilná, ale pomalá. Počet iterácií je veľmi vysoký, čo je dôsledok pevného kroku bez adaptácie.
+
+\subsection*{(d) Backtracking line search}
+
+\begin{itemize}
+    \item \textbf{Výsledok:} $x_d \approx (-1.47361102,\; 3.07175538,\; 10.1989558,\; 17.6906325,\; 0.00484666)$
+    \item \textbf{Chyba:} $\|x_d - x_{\text{opt}}\|_2 \approx 0.01464526$
+    \item \textbf{Počet iterácií:} $631\,781$
+    \item \textbf{Čas:} $208\,\mathrm{s}$
+    \item \textbf{Získané lambdy:} $\lambda_{\min} \approx 5.58 \times 10^{-6}, \quad \lambda_{\max} \approx 6.97 \times 10^{-6}$
+\end{itemize}
+
+Backtracking výrazne zrýchľuje konvergenciu oproti konštantnému kroku a stabilizuje výber dĺžky kroku.
+
+\subsection*{(e) Metóda zlatého rezu}
+
+Optimalizácia dĺžky kroku bola realizovaná pomocou metódy zlatého rezu.
+
+\subsubsection*{Interval \([0.1\lambda_{\min}, 10\lambda_{\max}]\)}
+
+\begin{itemize}
+    \item \textbf{Výsledok:} $x_e \approx (-1.47363523,\; 3.07175410,\; 10.1979473,\; 17.6922987,\; 0.00484631)$
+    \item \textbf{Chyba:} $\|x_e - x_{\text{opt}}\|_2 \approx 0.012701188$
+    \item \textbf{Počet iterácií:} $1\,555\,144$
+    \item \textbf{Čas:} $246.8\,\mathrm{s}$
+\end{itemize}
+
+\subsubsection*{Interval \([\lambda_{\min}, \lambda_{\max}]\)}
+
+\begin{itemize}
+    \item \textbf{Výsledok:} $x_e' \approx(-1.42591328,\; 3.05926331,\; 9.86790756,\; 15.6831989,\; 0.00527017)$
+    \item \textbf{Chyba:} $\|x_e' - x_{\text{opt}}\|_2 \approx 1.578267765$
+    \item \textbf{Počet iterácií:} $3\,000\,000 \; (\text{limit})$
+    \item \textbf{Čas:} $102\,\mathrm{s}$
+\end{itemize}
+
+\subsection*{Zhrnutie}
+
+Z porovnania metód vyplýva:
+
+\begin{itemize}
+    \item Konštantný krok je najpomalší a vyžaduje najviac iterácií.
+    \item Backtracking výrazne zlepšuje konvergenciu a stabilitu výberu kroku.
+    \item Metóda zlatého rezu je citlivá na voľbu intervalu:
+    \begin{itemize}
+        \item širší interval vedie k lepšej presnosti a rýchlejšej konvergencii,
+        \item úzky interval môže spôsobiť stagnáciu a výrazne horšie výsledky.
+    \end{itemize}
+\end{itemize}
+
+Experimenty potvrdzujú, že efektivita gradientných metód silne závisí od vhodnej voľby dĺžky kroku a škálovania problému.
 
 \end{document}
