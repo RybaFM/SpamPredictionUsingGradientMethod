@@ -79,16 +79,53 @@ Kritérium zastavenia:
 \|\nabla J(x^k)\|^2 < 10^{-3}
 \]
 
+\newpage
 \subsection*{(c) Gradientná metóda s konštantným krokom}
+
+Metóda bola testovaná pre rôzne hodnoty konštantného kroku $c$
+\subsubsection*{$c = 3 \times 10^{-7}$}
+
+\begin{itemize}
+    \item \textbf{Výsledok:} $x_c \approx To be changed$
+    \item \textbf{Chyba:} $\|x_c - x_{\text{opt}}\|_2 \approx To be changed$
+    \item \textbf{Počet iterácií:} $5\,000\,000$ (limit)
+    \item \textbf{Čas:} $To be changes$
+\end{itemize}
+
+Krok je príliš malý, metóda konverguje extrémne pomaly a nedosiahne riešenie ani po maximálnom počte iterácií.
+
+\subsubsection*{$c = 3 \times 10^{-5}$}
 
 \begin{itemize}
     \item \textbf{Výsledok:} $x_c \approx (-1.47360963,\; 3.07175527,\; 10.1989855,\; 17.6905539,\; 0.00484668)$
     \item \textbf{Chyba:} $\|x_c - x_{\text{opt}}\|_2 \approx 0.01472689$
     \item \textbf{Počet iterácií:} $2\,736\,859$
-    \item \textbf{Čas:} $66.4\,\mathrm{s}$
+    \item \textbf{Čas:} $71.24\,\mathrm{s}$
 \end{itemize}
 
-Metóda je stabilná, ale pomalá. Počet iterácií je veľmi vysoký, čo je dôsledok pevného kroku bez adaptácie.
+Táto hodnota kroku vedie k stabilnej konvergencii, avšak za cenu veľkého počtu iterácií.
+
+Metóda je stabilná pre c=$3 \times 10^{-5}$, ale pomalá. Počet iterácií je veľmi vysoký, čo je dôsledok pevného kroku bez adaptácie.
+
+\subsubsection*{$c = 3 \times 10^{-3}$}
+
+\begin{itemize}
+    \item \textbf{Výsledok:} $x_c \approx To be changed$
+    \item \textbf{Chyba:} $\|x_c - x_{\text{opt}}\|_2 \approx To be changed$
+    \item \textbf{Počet iterácií:} $5\,000\,000$ (limit)
+    \item \textbf{Čas:} $To be changed$
+\end{itemize}
+
+Krok je príliš veľký, metóda je nestabilná a cieľová funkcia nerastie monotónne, čo vedie k divergencii.
+
+\subsubsection*{Zhrnutie}
+
+Voľba konštantného kroku má zásadný vplyv na konvergenciu:
+\begin{itemize}
+    \item príliš malý krok spôsobuje veľmi pomalú konvergenciu,
+    \item vhodne zvolený krok vedie k stabilnému riešeniu,
+    \item príliš veľký krok spôsobuje divergenciu.
+\end{itemize}
 
 \subsection*{(d) Backtracking line search}
 
@@ -118,10 +155,10 @@ Optimalizácia dĺžky kroku bola realizovaná pomocou metódy zlatého rezu.
 \subsubsection*{Interval \([\lambda_{\min}, \lambda_{\max}]\)}
 
 \begin{itemize}
-    \item \textbf{Výsledok:} $x_e' \approx(-1.42591328,\; 3.05926331,\; 9.86790756,\; 15.6831989,\; 0.00527017)$
-    \item \textbf{Chyba:} $\|x_e' - x_{\text{opt}}\|_2 \approx 1.578267765$
-    \item \textbf{Počet iterácií:} $3\,000\,000 \; (\text{limit})$
-    \item \textbf{Čas:} $102\,\mathrm{s}$
+    \item \textbf{Výsledok:} $x_e' \approx To be changed$
+    \item \textbf{Chyba:} $\|x_e' - x_{\text{opt}}\|_2 \approx To be changed$
+    \item \textbf{Počet iterácií:} $To be changed$
+    \item \textbf{Čas:} $To be changed$
 \end{itemize}
 
 \subsection*{Zhrnutie}
