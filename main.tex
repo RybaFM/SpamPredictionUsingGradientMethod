@@ -86,10 +86,10 @@ Metóda bola testovaná pre rôzne hodnoty konštantného kroku $c$
 \subsubsection*{$c = 3 \times 10^{-7}$}
 
 \begin{itemize}
-    \item \textbf{Výsledok:} $x_c \approx To be changed$
-    \item \textbf{Chyba:} $\|x_c - x_{\text{opt}}\|_2 \approx To be changed$
+    \item \textbf{Výsledok:} $x_c \approx (-0.99398804,\; 3.0594658,\; 4.61121505,\; 5.98086102,\; 0.007168)$
+    \item \textbf{Chyba:} $\|x_c - x_{\text{opt}}\|_2 \approx 12.990851628224819$
     \item \textbf{Počet iterácií:} $5\,000\,000$ (limit)
-    \item \textbf{Čas:} $To be changes$
+    \item \textbf{Čas:} $137.47\,\mathrm{s}$
 \end{itemize}
 
 Krok je príliš malý, metóda konverguje extrémne pomaly a nedosiahne riešenie ani po maximálnom počte iterácií.
@@ -110,10 +110,10 @@ Metóda je stabilná pre c=$3 \times 10^{-5}$, ale pomalá. Počet iterácií je
 \subsubsection*{$c = 3 \times 10^{-3}$}
 
 \begin{itemize}
-    \item \textbf{Výsledok:} $x_c \approx To be changed$
-    \item \textbf{Chyba:} $\|x_c - x_{\text{opt}}\|_2 \approx To be changed$
+    \item \textbf{Výsledok:} $x_c \approx (-7.89528871,\; 8.27025728,\; 22.63379642,\; 48.20722059,\; 5.6435618)$
+    \item \textbf{Chyba:} $\|x_c - x_{\text{opt}}\|_2 \approx 34.42982206475787$
     \item \textbf{Počet iterácií:} $5\,000\,000$ (limit)
-    \item \textbf{Čas:} $To be changed$
+    \item \textbf{Čas:} $134.27\,\mathrm{s}$
 \end{itemize}
 
 Krok je príliš veľký, metóda je nestabilná a cieľová funkcia nerastie monotónne, čo vedie k divergencii.
@@ -127,19 +127,19 @@ Voľba konštantného kroku má zásadný vplyv na konvergenciu:
     \item príliš veľký krok spôsobuje divergenciu.
 \end{itemize}
 
-\subsection*{(d) Backtracking line search}
+\subsection*{(d) Gradientná metóda s približne optimálnou dĺžkou kroku}
 
 \begin{itemize}
     \item \textbf{Výsledok:} $x_d \approx (-1.47361102,\; 3.07175538,\; 10.1989558,\; 17.6906325,\; 0.00484666)$
     \item \textbf{Chyba:} $\|x_d - x_{\text{opt}}\|_2 \approx 0.01464526$
     \item \textbf{Počet iterácií:} $631\,781$
-    \item \textbf{Čas:} $208\,\mathrm{s}$
+    \item \textbf{Čas:} $376.17\,\mathrm{s}$
     \item \textbf{Získané lambdy:} $\lambda_{\min} \approx 5.58 \times 10^{-6}, \quad \lambda_{\max} \approx 6.97 \times 10^{-6}$
 \end{itemize}
 
 Backtracking výrazne zrýchľuje konvergenciu oproti konštantnému kroku a stabilizuje výber dĺžky kroku.
 
-\subsection*{(e) Metóda zlatého rezu}
+\subsection*{(e) Gradientná metóda s optimálnou dĺžkou kroku}
 
 Optimalizácia dĺžky kroku bola realizovaná pomocou metódy zlatého rezu.
 
@@ -149,16 +149,16 @@ Optimalizácia dĺžky kroku bola realizovaná pomocou metódy zlatého rezu.
     \item \textbf{Výsledok:} $x_e \approx (-1.47363523,\; 3.07175410,\; 10.1979473,\; 17.6922987,\; 0.00484631)$
     \item \textbf{Chyba:} $\|x_e - x_{\text{opt}}\|_2 \approx 0.012701188$
     \item \textbf{Počet iterácií:} $1\,555\,144$
-    \item \textbf{Čas:} $246.8\,\mathrm{s}$
+    \item \textbf{Čas:} $86.40\,\mathrm{s}$
 \end{itemize}
 
 \subsubsection*{Interval \([\lambda_{\min}, \lambda_{\max}]\)}
 
 \begin{itemize}
-    \item \textbf{Výsledok:} $x_e' \approx To be changed$
-    \item \textbf{Chyba:} $\|x_e' - x_{\text{opt}}\|_2 \approx To be changed$
-    \item \textbf{Počet iterácií:} $To be changed$
-    \item \textbf{Čas:} $To be changed$
+    \item \textbf{Výsledok:} $x_e' \approx (-1.45404918,\; 3.06835512,\; 10.2098572,\; 16.9312228,\; 0.00498977255)$
+    \item \textbf{Chyba:} $\|x_e' - x_{\text{opt}}\|_2 \approx 0.7719795862517741$
+    \item \textbf{Počet iterácií:} $5\,000\,000$ (limit)
+    \item \textbf{Čas:} $282.40\,\mathrm{s}$
 \end{itemize}
 
 \subsection*{Zhrnutie}
