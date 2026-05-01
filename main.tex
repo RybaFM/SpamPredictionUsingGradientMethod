@@ -177,4 +177,30 @@ Z porovnania metód vyplýva:
 
 Experimenty potvrdzujú, že efektivita gradientných metód silne závisí od vhodnej voľby dĺžky kroku a škálovania problému.
 
+\subsection*{(g) Kvalita klasifikácie modelu}
+Ako najlepšiu metódu sme zvolili gradientnú metódu s konštantným krokom {$c = 3 \times 10^{-5}$}.\\
+Získaný vektor parametrov $x = (-1.47360963,\; 3.07175527,\; 10.1989855,\; 17.6905539,\; 0.00484668)$.
+\subsubsection*{Klasifikáciu počítame nasledovne:}
+Nech $x$ sú parametre modelu a $u$ je vstup modelu. Teda pravdepodobnosť, že daný vstup $u$ je spam:
+\[
+P(v = 1 \mid u_1, \dots, u_4) = \frac{1}{e^{-x^T u} + 1}.
+\]
+Ohodnotíme parametre modelu na testovacích dátach. Ako metriku hodnotenia používame \textbf{accuracy}, ktorá je definovaná takto:\\
+\[
+\text{\textbf{accuracy}} = \frac{\text{počet správne klasifikovaných}}{\text{celkový počet}}.
+\]
+\noindent\\
+Získané výsledky: \textbf{accuracy} $\approx 88{,}68\,\%$.\\
+Zo 53 testovacích vstupov bolo 47 klasifikovaných správne, čo je dobrý výsledok. Či možeme dosiahnuť accuracy vyššiu ako 88\,\%? Musíme si uvedomiť, že dáta nie sú vždy dokonale lineárne separovateľné, preto v praxi očakávame chybu.
+\noindent\\
+\noindent\\
+\noindent\\
+\textbf{Pre zaujímavosť vyhodnotíme výsledky najhoršej metódy.}\\
+\noindent\\
+Najhoršia metóda je gradientná metóda s konštantným krokom $c = 10^{-3}$.\\
+$x \approx (-7.89528871,\; 8.27025728,\; 22.63379642,\; 48.20722059,\; 5.6435618)$, pričom $\|x - x_{\text{opt}}\| \approx 34$.\\
+\noindent\\
+\textbf{accuracy} $\approx 64.15\%$.\\
+Vidíme, že model funguje o niečo lepšie ako náhodná klasifikácia, čo potvrdzuje, že parametre vzdialené od minima sú nevhodné.
+
 \end{document}
