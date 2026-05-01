@@ -1,3 +1,4 @@
+\usepackage{float}
 \documentclass{article}
 \usepackage{graphicx}
 \usepackage{amsmath}
@@ -176,6 +177,20 @@ Z porovnania metód vyplýva:
 \end{itemize}
 
 Experimenty potvrdzujú, že efektivita gradientných metód silne závisí od vhodnej voľby dĺžky kroku a škálovania problému.
+\noindent\\
+\subsection*{(f) Porovnanie konvergencie gradientných metód}
+Znázorníme, ako sa mení hodnota $|J(x_k) - J^{\*}|$ v závislosti od počtu iterácií pre jednotlivé metódy. Na osi $y$ použijeme logaritmickú mierku, aby boly lepšie viditeľné malé hodnoty.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{graf.png}
+    \label{fig:konvergencia}
+\end{figure}
+
+\noindent $\bullet$ Metóda backtrackingu potrebuje najmenší počet iterácií na konvergenciu. Jednotlivé iterácie tejto metódy nás najviac približujú k optimálnej hodnote $J^*$. Na druhej strane však podľa výsledkov úlohy \textbf{e)} trvá táto metóda najdlhšie.
+
+\medskip
+
+\noindent $\bullet$ Gradientná metóda s konštantným krokom a Cauchyho metóda majú podobný priebeh konvergencie. Z výsledkov časti \textbf{e)} vieme, že gradientná metóda s konštantným krokom je výrazne rýchlejšia, z toho vyplýva, že rýchlosť konvergencie nezávisí len od počtu iterácií.
 
 \subsection*{(g) Kvalita klasifikácie modelu}
 Ako najlepšiu metódu sme zvolili gradientnú metódu s konštantným krokom {$c = 3 \times 10^{-5}$}.\\
