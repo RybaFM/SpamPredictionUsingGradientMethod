@@ -1,15 +1,26 @@
-\documentclass{article}
+\documentclass[titlepage]{article}
 \usepackage{float}
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage[margin=2cm, top=1.5cm]{geometry}
 
-\title{BohdansLegacyLatex}
-\author{}
-\date{}
+
+
+\title{Bohdan's legacy \\ 
+Logistická regresia pomocou gradientnej metódy (Predikcia nevyžiadanej pošty)}
+
+\author{Yarislav Riabikov(0.2), Mykyta Miendiukov(0.2),\\ Vitalii Kuzmenko(0.2), Nazar Shevchuk(0.2), Yurii Palchinskiy(0.2)}
+
 
 \begin{document}
+
+
+\date{}
+
+\maketitle
+\newpage
+
 
 \maketitle
 
@@ -60,7 +71,7 @@ Výsledná funkcia:
 
 
 \subsection*{(b) Gradient}
-\[ \frac{\partial J}{\partial x_j}=\sum_{i=1}^{m}(x^Tu^i-v^ix^Tu^i+\ln(1+e^{-x^Tu^i}))'=\sum_{i=1}^{m}(u_j^i - v^iu_j^i+\frac{e^{-x^Tu^i}}{1+e^{-x^Tu^i}}(-u_j^i)) \]
+\[ \frac{\partial J}{\partial x_j}=\sum_{i=1}^{m}(x^Tu^i-v^ix^Tu^i+\ln(1+e^{-x^Tu^i}))'=\sum_{i=1}^{m}(u_j^i - v^iu_j^i+\frac{e^{-x^Tu^i}}{1+e^{-x^Tu^i}}(-u_j^i))\] \[=(1-v^i-\frac{e^{-x^Tu^i}}{1+e^{-x^Tu^i}})u^i=(\frac{1+e^{-x^Tu^i}-e^{-x^Tu^i}}{1+e^{-x^Tu^i}}-v^i)u^i=(\frac{1}{1+e^{-x^Tu^i}}-v^i)u^i\]
 
 \section*{2. Výsledky experimentov – gradientné metódy}
 
@@ -119,7 +130,7 @@ Metóda je stabilná pre c=$3 \times 10^{-5}$, ale pomalá. Počet iterácií je
 
 Krok je príliš veľký, metóda je nestabilná a cieľová funkcia nerastie monotónne, čo vedie k divergencii.
 
-\subsubsection*{Zhrnutie}
+
 
 Voľba konštantného kroku má zásadný vplyv na konvergenciu:
 \begin{itemize}
@@ -162,7 +173,7 @@ Optimalizácia dĺžky kroku bola realizovaná pomocou metódy zlatého rezu.
     \item \textbf{Čas:} $305.05\,\mathrm{s}$
 \end{itemize}
 
-\subsection*{Zhrnutie}
+
 
 Z porovnania metód vyplýva:
 
@@ -217,5 +228,71 @@ $x \approx (-7.89528871,\; 8.27025728,\; 22.63379642,\; 48.20722059,\; 5.6435618
 \noindent\\
 \textbf{accuracy} $\approx 64.15\%$.\\
 Vidíme, že model funguje o niečo lepšie ako náhodná klasifikácia, čo potvrdzuje, že parametre vzdialené od minima sú nevhodné.
+
+\subsection*{(h) Hessova matica, konvexnosť a Lipschitzova konštanta}
+
+\subsubsection*{Hessova matica $\nabla^2 J(x)$}
+
+Vyjdeme z tvaru gradientu z časti (b):
+\[
+\frac{\partial J}{\partial x_j} = \sum_{i=1}^{m} u_j^i \left(g(x^T u^i) - v^i\right),
+\]
+Druhá parciálna derivácia:
+\[
+\frac{\partial^2 J}{\partial x_j \partial x_k}
+= \sum_{i=1}^{m} u_j^i \cdot \frac{\partial}{\partial x_k}\, g(x^T u^i)
+= \sum_{i=1}^{m} u_j^i \cdot g(x^T u^i)\bigl(1 - g(x^T u^i)\bigr) \cdot u_k^i.
+\]
+V maticovom zápise:
+\[
+\nabla^2 J(x) = \sum_{i=1}^{m} g^i(1-g^i)\, u^i (u^i)^T = U^T \operatorname{diag}\!\bigl(g \odot (1-g)\bigr)\, U
+\]
+
+\subsubsection*{Konvexnosť $J(x)$}
+
+Pre ľubovoľný vektor $z \in \mathbb{R}^5$ platí:
+\[
+z^T \nabla^2 J(x)\, z
+= \sum_{i=1}^{m} \underbrace{g^i(1-g^i)}_{\geq\, 0} \underbrace{(z^T u^i)^2}_{\geq\, 0} \geq 0.
+\]
+Keďže $g^i \in (0,1)$, je $g^i(1-g^i) \geq 0$ pre každé $i$. Hessova matica je teda pozitívne semidefinitná pre každé $x \in \mathbb{R}^5$, čo dokazuje konvexnosť $J(x)$.
+
+\subsubsection*{Dôkaz nerovnosti~(4)}
+
+Funkcia $g^i(1-g^i)$ nadobúda na intervale $[0,1]$ maximum v bode $g^i = \tfrac{1}{2} \text{ ;  }g^i(1-g^i) \leq \frac{1}{4} \quad \text{pre všetky } i.$
+
+Z toho plynie nerovnosť:
+\[
+\nabla^2 J(x)
+= \sum_{i=1}^{m} g^i(1-g^i)\, u^i(u^i)^T
+\preceq \frac{1}{4} \sum_{i=1}^{m} u^i(u^i)^T.
+\]
+Pre PSD matice $A \preceq B$ platí $\lambda_{\max}(A) \leq \lambda_{\max}(B)$, a keďže spektrálna norma PSD matice sa rovná jej najväčšiemu vlastnému číslu, dostávame:
+\[
+\|\nabla^2 J(x)\|_2 \leq \frac{1}{4}\left\|\sum_{i=1}^{m} u^i(u^i)^T\right\|_2 = \frac{1}{4}\|U^T U\|_2.
+\]
+
+\subsubsection*{Lipschitzovsky spojitý gradient}
+
+\textbf{Tvrdenie:} Ak $\|\nabla^2 f(x)\|_2 \leq L$ pre všetky $x$, potom $\nabla f$ je $L$-Lipschitzovský, t.\,j.\ $\|\nabla f(x) - \nabla f(y)\| \leq L\|x - y\|$. Dôkaz tohto tvrdenia možno nájsť v literatúre: Y.~Nesterov, \textit{Introductory Lectures on Convex Optimization}, Kluwer Academic Publishers, 2004, Kapitola~1.2.2.
+
+\subsubsection*{Lipschitzova konštanta a vhodný interval pre krok $c$}
+
+Kombináciou nerovnosti~(4) s predchádzajúcim tvrdením dostávame Lipschitzovu konštantu gradientu $\nabla J$:
+\[
+L = \frac{1}{4}\|U^T U\|_2 = \frac{724\,440{,}52}{4} \approx 181\,110{,}13.
+\]
+Pre gradientnú metódu s konštantným krokom je postačujúca podmienka zaručenej konvergencie:
+\[
+0 < c < \frac{2}{L} \approx \frac{2}{181\,110{,}13} \approx 1{,}1 \times 10^{-5}.
+\]
+\\
+\\
+\\
+\\
+Prehlasujeme, že sme tento projekt vypracovali samostatne, s využitím iba povolených zdrojov.
+Všetky použité zdroje (vrátane literatúry, online materiálov a nástrojov) sú v reporte riadne
+uvedené. Nepoužili sme nepovolené externé zdroje ani nástroje na generovanie riešení (napr.
+UI) v rozpore s pravidlami predmetu.
 
 \end{document}
